@@ -16,7 +16,7 @@ public class NorwegianGlobalTitleNumber extends NorwegianPhoneNumber {
 		super(normalizedNumber, localPrettyPrintedNumber);
 	}
 
-	public NorwegianGlobalTitleNumber of(String terseRepresentation) {
+	public static NorwegianGlobalTitleNumber of(String terseRepresentation) {
 		String normalized = normalizeNorwegianNumberOrThrow(terseRepresentation);
 		assertStringRepresentsCorrectPhoneNumberOrThrow(normalized, GlobalTitle);
 		

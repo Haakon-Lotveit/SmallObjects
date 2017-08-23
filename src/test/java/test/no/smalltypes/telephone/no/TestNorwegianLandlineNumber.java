@@ -1,11 +1,11 @@
 package test.no.smalltypes.telephone.no;
 
-import static no.smalltypes.telephone.norway.NorwegianLandlineNumber.of;
 import static no.smalltypes.telephone.norway.NorwegianLandlineNumber.relaxedParser;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
-import org.junit.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+
+import org.testng.annotations.Test;
 
 import no.smalltypes.telephone.IllegalPhoneNumberException;
 import no.smalltypes.telephone.TelephoneNumber;
@@ -40,43 +40,43 @@ public class TestNorwegianLandlineNumber {
 		numberIs22334455(number);
 	}
 
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testLaxInsufficientDigits() {
 		relaxedParser("2345678");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testOfFactoryTooManyDigits() {
-		of("2345678901");
+		NorwegianLandlineNumber.of("2345678901");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testLaxParser8() {
 		relaxedParser("81549300");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testLaxParser4() {
 		relaxedParser("40000000");
 	}
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testOfFactoryTooFewDigits() {
-		of("2345678");
+		NorwegianLandlineNumber.of("2345678");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testOfFactory800Number() {
-		of("81549300");
+		NorwegianLandlineNumber.of("81549300");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testOfFactoryCellphoneStartsWith4() {
-		of("40000000");
+		NorwegianLandlineNumber.of("40000000");
 	}
 	
-	@Test(expected = IllegalPhoneNumberException.class)
+	@Test(expectedExceptions = IllegalPhoneNumberException.class)
 	public void testOfFactoryCellphoneStartsWith9() {
-		of("90000000");
+		NorwegianLandlineNumber.of("90000000");
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class TestNorwegianLandlineNumber {
 	
 	private void numberIs22334455(TelephoneNumber number) {
 		assertEquals("22 33 44 55", number.localPrettyPrinted());
-		assertEquals("22334455", number.parseable());
+		assertEquals("+47 22334455", number.parseable());
 	}
 	
 }

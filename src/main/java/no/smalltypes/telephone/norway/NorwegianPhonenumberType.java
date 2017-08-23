@@ -35,7 +35,8 @@ public enum NorwegianPhonenumberType {
 				!normalizedNumber.startsWith("4") &&
 				!normalizedNumber.startsWith("58") &&
 				!normalizedNumber.startsWith("59") &&
-				!normalizedNumber.startsWith("8")) {
+				!normalizedNumber.startsWith("9") &&
+ 				!normalizedNumber.startsWith("8")) {
 			return Landline;
 		}
 

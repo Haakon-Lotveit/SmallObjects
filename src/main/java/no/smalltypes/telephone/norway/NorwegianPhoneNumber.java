@@ -9,7 +9,7 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 	public static final String COUNTRY = "NORWAY";
 
 	public NorwegianPhoneNumber(String normalizedNumber, String localPrettyPrintedNumber) {
-		super("+47" + normalizedNumber, localPrettyPrintedNumber, format("+47 %s", localPrettyPrintedNumber), COUNTRY);
+		super("+47 " + normalizedNumber, localPrettyPrintedNumber, format("+47 %s", localPrettyPrintedNumber), COUNTRY);
 	}
 
 	protected static String normalizeNorwegianNumberOrThrow(final String maybeNumber) {
@@ -36,5 +36,61 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 		}
 		
 		return normalizedNumber;
+	}
+	
+	/**
+	 * This is the main factory for Norwegian telephone numbers.
+	 * You put in the string, and get out the number. If everything works.
+	 */
+	public static NorwegianPhoneNumber parse(String number) {
+		int skipChars = 0;
+		if(number.startsWith("+47")) {
+			if(number.length() < 6) {
+				throw new IllegalPhoneNumberException("Illegal phone number: " + number);
+			}
+			if(number.charAt(3) == ' ') {
+				skipChars = 4;
+			}
+			else {
+				skipChars = 3;
+			}
+		}
+		else {
+			if(number.length() < 3) {
+				throw new IllegalPhoneNumberException("Illegal phone number:" + number);
+			}
+		}
+		
+		final String normalizedNumber = number.substring(skipChars);
+		
+		switch(NorwegianPhonenumberType.classify(normalizedNumber)) {
+		case Cellphone:
+			return NorwegianCellphoneNumber.of(normalizedNumber);
+		case DirectoryService:
+			return new NorwegianDirectoryServiceNumber(normalizedNumber);
+		case EmergencyNumber:
+			return NorwegianEmergencyNumber.of(normalizedNumber);
+		case GlobalTitle:
+			return NorwegianGlobalTitleNumber.of(normalizedNumber);
+		case GreaterGood:
+			return NorwegianGreaterGoodNumber.of(normalizedNumber);
+		case Landline:
+			return NorwegianLandlineNumber.of(normalizedNumber);
+		case Machine2Machine:
+			return NorwegianM2MNumber.of(normalizedNumber);
+		case Machine2MachineCellular:
+			return NorwegianM2MCellularNumber.of(normalizedNumber);
+		case NonGeographic5Digit:
+			return NorwegianNonGeographic5DigitNumber.of(normalizedNumber);
+		case NonGeographicTollFree:
+			return NorwegianNonGeographicTollFreePhoneNumber.of(normalizedNumber);
+		case OperatorSpecific:
+			return NorwegianOperatorSpecificNumber.of(normalizedNumber);
+		case NotAPhoneNumber:
+		default:
+			String errorMsg = String.format("Couldn't parse phone number '%s' into a Norwegian phone number", number);
+			throw new IllegalPhoneNumberException(errorMsg);
+		}
+		
 	}
 }
