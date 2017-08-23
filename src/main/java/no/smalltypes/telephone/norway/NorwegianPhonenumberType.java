@@ -11,7 +11,8 @@ import no.smalltypes.telephone.IllegalPhoneNumberException;
  * Now this madness has encroached on our once fair phonebooks.
  */
 public enum NorwegianPhonenumberType {
-	Landline, Machine2Machine, Machine2MachineCellular, Cellphone, GlobalTitle, EmergencyNumber, GreaterGood, NonGeographicTollFree, NonGeographic5Digit, OperatorSpecific, DirectoryService, NotAPhoneNumber;
+	Landline, Machine2Machine, Machine2MachineCellular, Cellphone, GlobalTitle, EmergencyNumber, GreaterGood, NonGeographicTollFree,
+	NonGeographic5Digit, OperatorSpecific, DirectoryService, NotAPhoneNumber;
 
 	/**
 	 * This attempts to classify a given phone number as a Norwegian phone number.
@@ -84,6 +85,12 @@ public enum NorwegianPhonenumberType {
 			return OperatorSpecific;
 		}
 
+		// Special case for deaf text telephone for emergencies.
+		// I have NOT been able to dig up what the rules for this number is, and it's driving me crazy.
+		if(normalizedNumber.equals("1412")) {
+			return EmergencyNumber;
+		}
+		
 		// This is for directory services, like 1880 and 1881.
 		if(normalizedNumber.length() == 4 && numerical >= 1850 && numerical <= 1899) {
 			return DirectoryService;

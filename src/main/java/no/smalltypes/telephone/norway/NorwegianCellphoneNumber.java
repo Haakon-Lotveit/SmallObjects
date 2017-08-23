@@ -17,7 +17,7 @@ public final class NorwegianCellphoneNumber extends NorwegianPhoneNumber {
 
 	// I'm kinda proud of how DUMB this method is. There is absolutely NOTHING here that is surprising, unclear or in other ways hard to understand.
 	public static NorwegianCellphoneNumber of(final String terseRepresentation) {
-		String normalized = possiblyNorwegianNumberOrThrow(terseRepresentation);
+		String normalized = normalizeNorwegianNumberOrThrow(terseRepresentation);
 		assertStringRepresentsCorrectPhoneNumberOrThrow(normalized, Cellphone);
 		
 		Matcher matcher = pattern.matcher(normalized); matcher.matches();

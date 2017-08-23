@@ -1,20 +1,22 @@
 package no.smalltypes.telephone.norway;
 
+import static java.lang.String.format;
+import static no.smalltypes.telephone.norway.NorwegianPhonenumberType.Machine2Machine;
+import static no.smalltypes.telephone.norway.NorwegianPhonenumberType.assertStringRepresentsCorrectPhoneNumberOrThrow;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static no.smalltypes.telephone.norway.NorwegianPhonenumberType.*;
-import static java.lang.String.format;
 
 public class NorwegianM2MNumber extends NorwegianPhoneNumber {
 
-	private static final Pattern pattern = Pattern.compile("\\d{2}\\d{2}\\d{2}\\d{2}\\d{2}\\d{2}");
+	private static final Pattern pattern = Pattern.compile("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})");
 	
 	public NorwegianM2MNumber(String normalizedNumber, String localPrettyPrintedNumber) {
 		super(normalizedNumber, localPrettyPrintedNumber);
 	}
 
 	public static NorwegianM2MNumber of(String terseRepresentation) {
-		String normalized = possiblyNorwegianNumberOrThrow(terseRepresentation);
+		String normalized = normalizeNorwegianNumberOrThrow(terseRepresentation);
 		assertStringRepresentsCorrectPhoneNumberOrThrow(normalized, Machine2Machine);
 		
 		Matcher matcher = pattern.matcher(normalized); matcher.matches();

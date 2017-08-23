@@ -30,7 +30,7 @@ public final class NorwegianLandlineNumber extends NorwegianPhoneNumber {
 	 * @throws IllegalPhoneNumberException if there are any errors in building the phone number.
 	 */
 	public static NorwegianLandlineNumber of(final String terseRepresentation) {
-		String normalized = possiblyNorwegianNumberOrThrow(terseRepresentation);
+		String normalized = normalizeNorwegianNumberOrThrow(terseRepresentation);
 		NorwegianPhonenumberType.assertStringRepresentsCorrectPhoneNumberOrThrow(terseRepresentation, NorwegianPhonenumberType.Landline);
 		
 		Matcher matcher = pattern.matcher(normalized);

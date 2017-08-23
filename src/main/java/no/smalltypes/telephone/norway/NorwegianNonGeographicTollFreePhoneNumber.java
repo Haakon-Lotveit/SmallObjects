@@ -22,7 +22,7 @@ public class NorwegianNonGeographicTollFreePhoneNumber extends NorwegianPhoneNum
 	}
 	
 	public static NorwegianNonGeographicTollFreePhoneNumber of(String terseRepresentation) {
-		String normalized = possiblyNorwegianNumberOrThrow(terseRepresentation);
+		String normalized = normalizeNorwegianNumberOrThrow(terseRepresentation);
 		assertStringRepresentsCorrectPhoneNumberOrThrow(normalized, NonGeographicTollFree);
 		
 		Matcher matcher = pattern.matcher(normalized); matcher.matches();
