@@ -27,10 +27,9 @@ public class NorwegianNonGeographicTollFreePhoneNumber extends NorwegianPhoneNum
 		
 		Matcher matcher = pattern.matcher(normalized); matcher.matches();
 		
-		String terseNumber = format("+47%s", normalized);
 		String localPrettyPrintedNumber = format("%s %s %s", matcher.group(1), matcher.group(2), matcher.group(3));
 				
-		return new NorwegianNonGeographicTollFreePhoneNumber(terseNumber, localPrettyPrintedNumber);
+		return new NorwegianNonGeographicTollFreePhoneNumber(normalized, localPrettyPrintedNumber);
 	}
 	
 }

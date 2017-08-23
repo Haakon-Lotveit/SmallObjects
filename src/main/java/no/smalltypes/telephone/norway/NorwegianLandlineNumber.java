@@ -36,12 +36,11 @@ public final class NorwegianLandlineNumber extends NorwegianPhoneNumber {
 		Matcher matcher = pattern.matcher(normalized);
 		matcher.matches();
 		
-		String terseNumber = String.format("+47%s", normalized);
 		String localPrettyPrintedNumber = String.format(
 				"%s %s %s %s",
 				matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
 		
-		return new NorwegianLandlineNumber(terseNumber, localPrettyPrintedNumber);
+		return new NorwegianLandlineNumber(normalized, localPrettyPrintedNumber);
 	}
 	
 	/**

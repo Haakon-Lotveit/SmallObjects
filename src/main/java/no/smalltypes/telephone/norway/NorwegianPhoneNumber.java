@@ -7,8 +7,8 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 
 	public static final String COUNTRY = "NORWAY";
 
-	public NorwegianPhoneNumber(String terseNumber, String localPrettyPrintedNumber) {
-		super(terseNumber, localPrettyPrintedNumber, String.format("+47 %s", localPrettyPrintedNumber), COUNTRY);
+	public NorwegianPhoneNumber(String normalizedNumber, String localPrettyPrintedNumber) {
+		super("+47" + normalizedNumber, localPrettyPrintedNumber, String.format("+47 %s", localPrettyPrintedNumber), COUNTRY);
 	}
 
 	protected static String possiblyNorwegianNumberOrThrow(final String maybeNumber) {
@@ -24,11 +24,11 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 			throw new IllegalPhoneNumberException(errorMessage);
 		}
 
+		// TODO: It seems a bit strange to classify it here. a smaller preliminary test might be better.
 		if(NorwegianPhonenumberType.classify(normalizedNumber) == NorwegianPhonenumberType.NotAPhoneNumber) {
 			throw new IllegalPhoneNumberException(String.format("Phone number '%s' is not a valid Norwegian phone number of any sort", maybeNumber));
 		}
 		
 		return normalizedNumber;
 	}
-	
 }
