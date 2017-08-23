@@ -7,6 +7,11 @@
 	<name>smalltypes</name>
 	<description>smalltypes is a collection of small classes to hold on to common stuff like emails, phone numbers, names, etc. It's not exactly meant to compete with Joda-Money and friends.</description>
 
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

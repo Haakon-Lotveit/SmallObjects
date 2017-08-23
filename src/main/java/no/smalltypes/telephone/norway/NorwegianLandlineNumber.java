@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 import no.smalltypes.telephone.IllegalPhoneNumberException;
 
-public class NorwegianLandlineNumber extends NorwegianPhoneNumber {
+public final class NorwegianLandlineNumber extends NorwegianPhoneNumber {
 	private static final Pattern pattern = Pattern.compile("(\\d{2})(\\d{2})(\\d{2})(\\d{2})");
-	private NorwegianLandlineNumber(String terseNumber, String localPrettyPrintedNumber, String internationalPrettyPrintedNumber) {
-		super(terseNumber, localPrettyPrintedNumber, internationalPrettyPrintedNumber);
-		// TODO Auto-generated constructor stub
+	
+	private NorwegianLandlineNumber(String terseNumber, String localPrettyPrintedNumber) {
+		super(terseNumber, localPrettyPrintedNumber);
 	}
 
 	/**
@@ -31,26 +31,24 @@ public class NorwegianLandlineNumber extends NorwegianPhoneNumber {
 	 */
 	public static NorwegianLandlineNumber of(final String terseRepresentation) {
 		String normalized = possiblyNorwegianNumberOrThrow(terseRepresentation);
-		NorwegianPhonenumberType type =  NorwegianPhonenumberType.classify(terseRepresentation);
-
-		if(type != NorwegianPhonenumberType.Landline) {
-			throw new IllegalPhoneNumberException("Wrong type of phone number: Got " + type + " but expected " + NorwegianPhonenumberType.Landline);
-		}
+		NorwegianPhonenumberType.assertStringRepresentsCorrectPhoneNumberOrThrow(terseRepresentation, NorwegianPhonenumberType.Landline);
 		
 		Matcher matcher = pattern.matcher(normalized);
 		matcher.matches();
+		
+		String terseNumber = String.format("+47%s", normalized);
 		String localPrettyPrintedNumber = String.format(
 				"%s %s %s %s",
 				matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
 		
-		String internationalPrettyPrintedNumber = String.format("+47 %s", localPrettyPrintedNumber);
-		
-		return new NorwegianLandlineNumber(normalized, localPrettyPrintedNumber, internationalPrettyPrintedNumber);
+		return new NorwegianLandlineNumber(terseNumber, localPrettyPrintedNumber);
 	}
 	
 	/**
 	 * This is an incredibly lazy parser. If will look for numbers or a +, and proceed from there, trying to pick up digits until it has enough,
 	 * and then it will use the of-factory method. If the input is bad, the of method will complain.
+	 * TODO: This should probably be moved to the NorwegianPhoneNumber class, do a switch on the enumerated type, and then build from there.
+	 * We'd end up doing the classification twice, but that's okay. 
 	 * @param text the text to be parsed.
 	 * @return a NorwegianLandLineNumber consisting of the digits you passed in.
 	 */

@@ -7,9 +7,8 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 
 	public static final String COUNTRY = "NORWAY";
 
-	public NorwegianPhoneNumber(String terseNumber, String localPrettyPrintedNumber,
-			String internationalPrettyPrintedNumber) {
-		super(terseNumber, localPrettyPrintedNumber, internationalPrettyPrintedNumber, COUNTRY);
+	public NorwegianPhoneNumber(String terseNumber, String localPrettyPrintedNumber) {
+		super(terseNumber, localPrettyPrintedNumber, String.format("+47 %s", localPrettyPrintedNumber), COUNTRY);
 	}
 
 	protected static String possiblyNorwegianNumberOrThrow(final String maybeNumber) {
@@ -31,4 +30,5 @@ public abstract class NorwegianPhoneNumber extends AbstractTelephoneNumber {
 		
 		return normalizedNumber;
 	}
+	
 }
